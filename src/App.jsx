@@ -8,6 +8,8 @@ import { HandlerCartProvider } from "./context/HandlerCartProvider";
 
 import ProtectedLayout from "./layout/ProtectedLayout";
 import Cart from "./views/Cart";
+import ProductsAdmin from "./views/ProductsAdmin";
+import NewProduct from "./views/NewProduct";
 
 function App() {
   return (
@@ -23,6 +25,11 @@ function App() {
             <Route path="/productos/" element={<ProtectedLayout />}>
               <Route index element={<Store />} />
               <Route path="Carrito" element={<Cart />} />
+            </Route>
+
+            <Route path="/admin/" element={<ProtectedLayout />}>
+              <Route index element={<ProductsAdmin />} />
+              <Route path="nuevo-producto" element={<NewProduct />} />
             </Route>
           </Routes>
         </AuthProvider>

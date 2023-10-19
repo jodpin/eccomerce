@@ -14,7 +14,7 @@ const ItemProductStore = ({ product, addCart }) => {
 
       <h4 className="font-bold ">{"$" + price}</h4>
       <button
-        onClick={() => addToCart(id)}
+        onClick={() => addToCart(product)}
         className="bg-gray-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded"
       >
         Agregar al carrito

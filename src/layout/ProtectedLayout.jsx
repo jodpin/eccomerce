@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Header from "../components/Header";
 import { Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -11,12 +11,12 @@ const ProtectedLayout = () => {
     if (!auth) {
       navigate("/");
     }
-  }, []);
+  });
 
   return (
     <>
       <Header />
-      <main className="container mx-auto mt-5 md:mt-20 p-5 md:flex md:justify-center">
+      <main className="container mx-auto mt-5 p-5 md:flex md:justify-center">
         <div className="w-3/4">
           {/* Este outlet lo que hace es permitir 
           que se muestre los elementos envueltos en este componente */}

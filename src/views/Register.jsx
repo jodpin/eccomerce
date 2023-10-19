@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Alert from "../components/Alert";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const IDENTIDAD = [
   "Cedula de ciudadania",
@@ -22,6 +23,12 @@ const Register = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
 
   const [alert, setAlert] = useState({});
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Object.keys(auth).length === 0) navigate("/registro");
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +68,7 @@ const Register = () => {
       return;
     }
 
-    setAlert({})
+    setAlert({});
     try {
       const { data } = await axios.post("http://localhost:3001/users", {
         nombre,
@@ -74,6 +81,7 @@ const Register = () => {
         direccion,
         password,
         repeatPassword,
+        admin: false,
       });
 
       setAlert({
@@ -81,16 +89,16 @@ const Register = () => {
         error: false,
       });
 
-      setEmail("");
-      setPassword("");
-      setRepeatPassword("");
-      setNombre("");
-      setApellido("");
-      setDireccion("");
-      setTipo_documento("");
-      setDocumento("");
-      setEdad("");
-      setTelefono("");
+      // setRepeatPassword("");
+      // setNombre("");
+      // setApellido("");
+      // setDireccion("");
+      // setTipo_documento("");
+      // setDocumento("");
+      // setEdad("");
+      // setTelefono("");
+      // setEmail("");
+      // setPassword("");
       console.log(data);
     } catch (error) {
       setAlert({
@@ -98,7 +106,6 @@ const Register = () => {
         error: true,
       });
     }
-
   };
 
   const { msg } = alert;

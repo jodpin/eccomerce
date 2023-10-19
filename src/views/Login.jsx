@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
 import axios from "axios";
@@ -9,10 +9,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({});
-
-  const { setAuth } = useAuth();
-
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Object.keys(auth).length === 0) navigate("/");
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -20,6 +20,14 @@ const AuthProvider = ({ children }) => {
   // contenido en la variable AUTH; pero podemos revisar el
   // localStorage y si hay token hacemos un llamado hacia
   // la API
+
+  useEffect(() => {
+    if(Object.keys(auth).length===0){
+      navigate("/");
+    }
+  }, [auth])
+  
+
   useEffect(() => {
     const authUser = async () => {
       const token = localStorage.getItem("token");
@@ -40,8 +48,10 @@ const AuthProvider = ({ children }) => {
         },
       };
       try {
-        console.log("antes del users profile")
-        const { data } = await axios("http://localhost:3001/users/profile", config);
+        const { data } = await axios(
+          "http://localhost:3001/users/profile",
+          config
+        );
         setAuth(data);
         navigate("/productos");
       } catch (error) {
@@ -54,10 +64,15 @@ const AuthProvider = ({ children }) => {
     authUser();
   }, []);
 
+  const cerrarSesion = () => {
+    setAuth({});
+    localStorage.removeItem("token");
+  };
+
   // lo que se ponga dentro de return es aquello a lo
   // que se puede acceder desde afuera
   return (
-    <AuthContext.Provider value={{ auth, setAuth, loading }}>
+    <AuthContext.Provider value={{ auth, setAuth, loading, cerrarSesion }}>
       {children}
     </AuthContext.Provider>
   );
