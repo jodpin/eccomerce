@@ -28,7 +28,7 @@ const Register = () => {
 
   useEffect(() => {
     if (Object.keys(auth).length === 0) navigate("/registro");
-  });
+  },[]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ const Register = () => {
 
     setAlert({});
     try {
-      const { data } = await axios.post("http://localhost:3001/users", {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users`, {
         nombre,
         apellido,
         email,
@@ -89,16 +89,16 @@ const Register = () => {
         error: false,
       });
 
-      // setRepeatPassword("");
-      // setNombre("");
-      // setApellido("");
-      // setDireccion("");
-      // setTipo_documento("");
-      // setDocumento("");
-      // setEdad("");
-      // setTelefono("");
-      // setEmail("");
-      // setPassword("");
+      setRepeatPassword("");
+      setNombre("");
+      setApellido("");
+      setDireccion("");
+      setTipo_documento("");
+      setDocumento("");
+      setEdad("");
+      setTelefono("");
+      setEmail("");
+      setPassword("");
       console.log(data);
     } catch (error) {
       setAlert({

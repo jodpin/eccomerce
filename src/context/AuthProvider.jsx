@@ -22,11 +22,14 @@ const AuthProvider = ({ children }) => {
   // la API
 
   useEffect(() => {
-    if(Object.keys(auth).length===0){
+    if (auth.admin) {
+      navigate("/admin");
+      return;
+    }
+    if (Object.keys(auth).length === 0) {
       navigate("/");
     }
-  }, [auth])
-  
+  }, [auth]);
 
   useEffect(() => {
     const authUser = async () => {
@@ -49,13 +52,16 @@ const AuthProvider = ({ children }) => {
       };
       try {
         const { data } = await axios(
-          "http://localhost:3001/users/profile",
+          `${import.meta.env.VITE_BACKEND_URL}/users/profile`,
           config
         );
+        console.log("seteando la respuesta");
+        console.log(data)
         setAuth(data);
         navigate("/productos");
       } catch (error) {
         // para setear auth en vacio cuando expire el token
+        console.log(error);
         setAuth({});
       } finally {
         setLoading(false);

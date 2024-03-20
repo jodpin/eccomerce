@@ -16,8 +16,9 @@ const ProtectedLayout = () => {
   return (
     <>
       <Header />
-      <main className="container mx-auto mt-5 p-5 md:flex md:justify-center">
-        <div className="w-3/4">
+      <main className="mx-auto w-full mt-5">
+        {/* <main className=" mx-auto mt-5 p-5 lg:flex lg:justify-center"> */}
+        <div>
           {/* Este outlet lo que hace es permitir 
           que se muestre los elementos envueltos en este componente */}
           <Outlet />

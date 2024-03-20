@@ -13,8 +13,13 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (Object.keys(auth).length === 0) navigate("/");
-  }, []);
+    console.log(auth)
+    if (auth.admin) {
+      navigate("/admin");
+      return;
+    }
+    if (!auth.name) navigate("/");
+  }, [auth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +34,7 @@ const Login = () => {
 
     setAlert({});
     try {
-      const { data } = await axios.post("http://localhost:3001/users/login", {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
         email,
         password,
       });
@@ -38,7 +43,12 @@ const Login = () => {
 
       setAuth(data);
       console.log("revisando error");
-      navigate("/productos");
+      if (auth.admin) {
+        navigate("/admin");
+      } else {
+        navigate("/productos");
+      }
+
       setAlert({});
     } catch (error) {
       setAlert({ msg: error.response.data.msj, error: true });
